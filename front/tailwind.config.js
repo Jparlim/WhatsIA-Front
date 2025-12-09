@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        white: "#FFFFFF",
+        backGround: "#F3F3FB",
+        whiteFF: "#FFFFFF",
         azulButton: "#0051FF",
         bordas: "#E4E4E4",
         financeiro: {
@@ -35,6 +36,9 @@ export default {
         }
       }
     },
+    fontFamily: {
+      "title": ['Roboto', "sans-serif"]
+    }
   },
   plugins: [],
 }
