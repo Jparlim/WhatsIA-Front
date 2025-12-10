@@ -18,19 +18,22 @@ export function CreateCount() {
             CNPJ
         ]
 
-        list.forEach(e => {
+
+        list.forEach(async e => {
             if(e.trim() === '') {
                 alert(`é necessário inserir algum valor`)
             }
             
             try {
-                axios.post('http://localhost:3000/create', {nome, email, senha, numero, CNPJ})
+                const token = await axios.post('http://localhost:3000/create', {nome, email, senha, numero, CNPJ})
+                console.log(token.data.tokenSend)
             } catch(error) {
                 console.log(error)
             }
         })
 
     }
+
 
     return (
         <div className="flex h-screen items-center justify-center">
@@ -84,7 +87,7 @@ export function CreateCount() {
                             onChange={e => setCNPJ(e.target.value)} value={CNPJ}/>
 
                             <button type="button" className="bg-azulButton w-[220px] h-[60px] rounded-[15px] text-white ml-[165px] active:bg-black hover:bg-azulButton"
-                                onClick={validation}
+                                onClick={() => validation()}
                             >Enviar Token</button>
                         </div>
                     </div>
