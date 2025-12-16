@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export function CreateCount() {
 
@@ -8,6 +9,8 @@ export function CreateCount() {
     const [ senha, setSenha ] = useState('')
     const [ numero, setTelefone ] = useState('')
     const [ CNPJ, setCNPJ ] = useState('')
+
+    const nav = useNavigate();
 
     const validation = () => {
         const list = [
@@ -23,15 +26,14 @@ export function CreateCount() {
             if(e.trim() === '') {
                 alert(`é necessário inserir algum valor`)
             }
-            
+
             try {
-                const token = await axios.post('http://localhost:3000/create', {nome, email, senha, numero, CNPJ})
-                console.log(token.data.tokenSend)
+                axios.post("http://localhost:3000/create", {nome, email, senha, numero, CNPJ})
+                nav("/token")
             } catch(error) {
                 console.log(error)
             }
         })
-
     }
 
 
@@ -57,7 +59,7 @@ export function CreateCount() {
                     <div className="flex flex-col mt-[30px] gap-[10px]">
                         <div>
                             <p className="font-sans font-semibold text-[20px] text-black/85">Nome da empresa</p>
-                            <input type="text" placeholder="Loja do seu zé" className="w-[683px] h-[45px] border-current-bordas border-[3px] rounded-[5px] focus:outline-none pl-3"
+                            <input key={"nomeEmpresa"} type="text" placeholder="Loja do seu zé" className="w-[683px] h-[45px] border-current-bordas border-[3px] rounded-[5px] focus:outline-none pl-3"
                             onChange={e => setNameEmpresa(e.target.value)} value={nome}/>
                         </div>
 
