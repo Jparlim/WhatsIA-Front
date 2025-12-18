@@ -3,7 +3,23 @@ import { useRef, useState } from "react"
 export function TokenSend() {
     
     const [code, setCode] = useState(Array(6).fill(""))
-    const inputsRef = useRef([])
+    const inputsRef = useRef<(HTMLInputElement | null)[]>([])
+
+    const inputSave = (value: React.ChangeEvent<HTMLInputElement>, index: number) => {
+        const newCode = [...code]
+        newCode[index] = value.target.value
+        setCode(newCode)
+
+        if(value && index < code.length - 1) {
+            inputsRef.current[index + 1]?.focus()
+        }
+    }
+
+    const onkeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index:number) => {
+        if(e.key === "Backspace" && !code[index] && index > 0) {
+            inputsRef.current[index -1]?.focus()
+        }
+    }
 
     return (
         <div className="flex h-screen items-center justify-center">
@@ -33,17 +49,13 @@ export function TokenSend() {
                             {code.map((value, index) => (
                                 <input
                                     key={index}
-                                    ref={el => (inputsRef.current[index] = el)}
+                                    ref={el => {inputsRef.current[index] = el}}
                                     value={value}
                                     type="text" 
                                     inputMode="numeric"
                                     maxLength={1}
-                                    onChange={e => {
-                                        const newCode = [...code]
-                                        newCode[index] = e.target.value
-                                        setCode(newCode)
-                                    }}
-
+                                    onChange={e => inputSave(e, index)}
+                                    onKeyDown={e => onkeyDown(e, index)}
                                     className="w-[80px] h-[55px] border-[3px] border-bordas rounded-[10px] focus:outline-none pl-[28px] font-semibold text-[25px]"
                                 />    
                             ))}

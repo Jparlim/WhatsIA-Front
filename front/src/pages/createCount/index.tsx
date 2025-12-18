@@ -21,19 +21,17 @@ export function CreateCount() {
             CNPJ
         ]
 
+        if(list.some(str => str === "")) {
+            return alert("existem campos vazios que são obrigatórios!")
+        }
 
-        list.forEach(async e => {
-            if(e.trim() === '') {
-                alert(`é necessário inserir algum valor`)
-            }
-
-            try {
-                axios.post("http://localhost:3000/create", {nome, email, senha, numero, CNPJ})
-                nav("/token")
-            } catch(error) {
-                console.log(error)
-            }
-        })
+        try {
+            axios.post("http://localhost:3000/create", {nome, email, senha, numero, CNPJ})
+            
+            nav("/token")
+        } catch(error) {
+            console.log(error)
+        }
     }
 
 
