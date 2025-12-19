@@ -12,7 +12,7 @@ export function CreateCount() {
 
     const nav = useNavigate();
 
-    const validation = () => {
+    const validation = async () => {
         const list = [
             nome,
             email,
@@ -26,8 +26,12 @@ export function CreateCount() {
         }
 
         try {
-            axios.post("http://localhost:3000/create", {nome, email, senha, numero, CNPJ})
+            const data = await axios.post("http://localhost:3000/create", {nome, email, senha, numero, CNPJ})
             
+            sessionStorage.setItem('idPending', data.data.id)
+
+            console.log(data.data.token)
+
             nav("/token")
         } catch(error) {
             console.log(error)

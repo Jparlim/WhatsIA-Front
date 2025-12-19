@@ -1,3 +1,4 @@
+import axios from "axios"
 import { useRef, useState } from "react"
 
 export function TokenSend() {
@@ -5,13 +6,18 @@ export function TokenSend() {
     const [code, setCode] = useState(Array(6).fill(""))
     const inputsRef = useRef<(HTMLInputElement | null)[]>([])
 
-    const inputSave = (value: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const inputSave =  async (value: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const newCode = [...code]
         newCode[index] = value.target.value
         setCode(newCode)
 
         if(value && index < code.length - 1) {
             inputsRef.current[index + 1]?.focus()
+        }
+
+        if(index === code.length - 1) {
+            const idPending = sessionStorage.getItem("idPending")
+            await axios.post("http://localhost:3000/create/token", {code: newCode, idPending})
         }
     }
 
