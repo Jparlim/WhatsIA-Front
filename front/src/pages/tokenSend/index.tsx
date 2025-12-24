@@ -14,11 +14,12 @@ export function TokenSend() {
         if(value && index < code.length - 1) {
             inputsRef.current[index + 1]?.focus()
         }
+    }
 
-        if(index === code.length - 1) {
-            const idPending = sessionStorage.getItem("idPending")
-            await axios.post("http://localhost:3000/create/token", {code: newCode, idPending})
-        }
+    const handle = async () => {
+        const idPending = sessionStorage.getItem("idPending")
+        const token = code.join("")
+        await axios.post("http://localhost:3000/create/token", {token, idPending})
     }
 
     const onkeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index:number) => {
@@ -66,12 +67,13 @@ export function TokenSend() {
                                 />    
                             ))}
 
-                            {/* <input type="numer" maxLength={1} inputMode="numeric" className="w-[80px] h-[55px] border-[3px] border-bordas rounded-[10px] focus:outline-none pl-[28px] font-semibold text-[25px]"/> */}
-                            
                         </div>
-
                     </form>
-
+                    
+                    <button type="button" className="bg-azulButton w-[220px] h-[60px] rounded-[15px] text-white ml-[165px] active:bg-black hover:bg-azulButton mt-[60px]"
+                            onClick={() => handle()}>
+                                Validar Token
+                    </button>
                 </div>
             </div>
         </div>
