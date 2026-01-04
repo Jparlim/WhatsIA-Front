@@ -40,6 +40,16 @@ export function CreateCount() {
         return `${valor.slice(0, 2)} (${valor.slice(2, 4)}) ${valor.slice(4, 9)}-${valor.slice(9, 13)}`;
     }
 
+    const formatCNPJ = (valor: string) => {
+        if(valor.length === 0) return '';
+
+        if(valor.length <= 2) return valor;
+        if(valor.length <= 5) return `${valor.slice(0, 2)}.${valor.slice(2)}`
+        if(valor.length <= 8) return `${valor.slice(0, 2)}.${valor.slice(2, 5)}.${valor.slice(5, 8)}`
+        if(valor.length <= 12) return `${valor.slice(0, 2)}.${valor.slice(2, 5)}.${valor.slice(5, 8)}/${valor.slice(8, 12)}`
+        if(valor.length <= 14) return `${valor.slice(0, 2)}.${valor.slice(2, 5)}.${valor.slice(5, 8)}/${valor.slice(8, 12)}-${valor.slice(12, 14)}`
+    }
+
     const validation = async () => {
         const list = [
             nome,
@@ -69,7 +79,7 @@ export function CreateCount() {
 
     return (
         <div className="flex h-screen items-center justify-center">
-            <div className="flex w-[1382px] h-[650px] rounded-[20px] shadow-2xl bg-white">
+            <div className="flex w-[1382px] h-[70%] rounded-[20px] shadow-2xl bg-white">
 
                 <div className="bg-slate-700 w-[582px] h-full rounded-l-[20px]"/>
 
@@ -107,7 +117,6 @@ export function CreateCount() {
                                     onChange={e => {
                                         setSenha(e.target.value)
                                     }} 
-                                    
                                     value={senha}/> 
                                     <img src={imgUnlock ? property0 : property1} className="absolute top-1 translate-x-[10px] translate-y-[6px] size-6 hover:cursor-pointer" onClick={() => handlePass()}/>         
                                 </div>
@@ -129,9 +138,12 @@ export function CreateCount() {
                             <div>
                                 <p className="font-sans font-semibold text-[20px] text-black/85">CNPJ</p>
                                 <input type="text" placeholder="00.000.000/0000-00" className="w-[250px] h-[45px] border-current-bordas border-[3px] rounded-[5px] pl-3 focus:outline-none"
-                                onChange={e => setCNPJ(e.target.value)} 
-                                value={CNPJ}
-                                maxLength={14}/>
+                                onChange={e => {
+                                    const data = format(e.target.value).slice(0, 14)
+                                    setCNPJ(data)
+                                }} 
+                                value={formatCNPJ(CNPJ)}
+                                maxLength={18}/>
                             </div>
 
                             <button type="button" className="bg-azulButton w-[220px] h-[60px] rounded-[15px] text-white ml-[133px] active:bg-black hover:bg-azulButton mt-[15px]"

@@ -1,10 +1,12 @@
 import axios from "axios"
 import { useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export function TokenSend() {
-    
     const [code, setCode] = useState(Array(6).fill(""))
     const inputsRef = useRef<(HTMLInputElement | null)[]>([])
+
+    const nav = useNavigate()
 
     const inputSave =  async (value: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const newCode = [...code]
@@ -19,7 +21,15 @@ export function TokenSend() {
     const handle = async () => {
         const idPending = sessionStorage.getItem("idPending")
         const token = code.join("")
-        await axios.post("http://localhost:3000/create/token", {token, idPending})
+        try {
+            await axios.post("http://localhost:3000/create/token", {token, idPending})
+            alert("conta criada com sucesso!!")
+        } catch(error) {
+            console.log(error)
+        }
+
+        nav('/') 
+        // colocar o endereço para a próxima página!
     }
 
     const onkeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index:number) => {
