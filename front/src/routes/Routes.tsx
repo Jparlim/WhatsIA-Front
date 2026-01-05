@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 
-import { CreateCount } from "../initPage/createCount/index";
-import { TokenSend } from "../initPage/tokenSend";
-import { Login } from "../initPage/loginCount";
+import { CreateCount } from "../initPages/createCount/index";
+import { TokenSend } from "../initPages/tokenSend";
+import { Login } from "../initPages/loginCount";
 
 export function Rotas() {
     return (

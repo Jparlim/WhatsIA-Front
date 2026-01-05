@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom"
 import property0 from '../../../Images/Property 1=interface, Property 2=outline, Property 3=lock 01.svg'
 import property1 from '../../../Images/Property 1=interface, Property 2=outline, Property 3=unlock 01.svg'
 
-
 export function CreateCount() {
     
     const nav = useNavigate();
