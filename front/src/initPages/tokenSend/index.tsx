@@ -40,7 +40,7 @@ export function TokenSend() {
 
     return (
         <div className="flex h-screen items-center justify-center">
-            <div className="flex w-[1382px] h-[650px] rounded-[20px] shadow-2xl bg-white">
+            <div className="flex w-[1382px] h-[92%] rounded-[20px] shadow-2xl bg-white">
 
                 <div className="bg-slate-700 w-[582px] h-full rounded-l-[20px]"/>
 

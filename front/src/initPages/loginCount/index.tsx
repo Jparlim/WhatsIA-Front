@@ -24,7 +24,7 @@ export function Login() {
 
     return (
         <div className="flex h-screen items-center justify-center">
-            <div className="flex w-[1382px] h-[70%] rounded-[20px] shadow-2xl bg-white relative">
+            <div className="flex w-[1382px] h-[80%] rounded-[20px] shadow-2xl bg-white relative">
                 <div className="ml-[115px] w-screen">
                     <h1 className=" text-[52px] font-sans font-semibold mt-[30px]">Login</h1>
                     <p className="text-[22px] font-normal h-[82px] w-[565px] mt-2">Bem vindo de volta a Quantyum!</p>

@@ -77,16 +77,15 @@ export function CreateCount() {
 
 
     return (
-        <div className="flex h-screen items-center justify-center">
-            <div className="flex w-[1382px] h-[70%] rounded-[20px] shadow-2xl bg-white">
+        <div className="flex h-screen w-screen items-center justify-center">
 
-                <div className="bg-slate-700 w-[582px] h-full rounded-l-[20px]"/>
+                <div className="bg-slate-700 w-[582px] h-full "/>
 
                 <div className="ml-[24px]">
-                    <h1 className=" text-[52px] font-sans font-semibold">Criar conta</h1>
-                    <p className=" text-[22px] font-normal h-[82px] w-[565px]">Antes de continuar, confirme seu email para receber o token de avitação</p>
+                    <h1 className=" text-[48px] font-sans font-semibold">Criar conta</h1>
+                    <p className=" text-[20px] font-normal h-[82px] w-[565px]">Antes de continuar, confirme seu email para receber o token de avitação</p>
 
-                    <div className="flex mt-[38px] gap-[380px]">
+                    <div className="flex mt-[10px] gap-[380px]">
                         <h2 className="font-sans font-semibold text-[28px] text-black/70">Passo 1</h2>
                         <h3 className="font-sans font-semibold text-[28px] text-black/40">Passo 2</h3>
                     </div>
@@ -152,7 +151,6 @@ export function CreateCount() {
                     </div>
                 </div>
 
-            </div>
         </div>
     )
 }
