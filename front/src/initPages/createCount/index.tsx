@@ -77,9 +77,9 @@ export function CreateCount() {
 
 
     return (
-        <div className="flex h-screen w-screen items-center justify-center">
+        <div className="flex h-screen w-screen">
 
-                <div className="bg-slate-700 w-[582px] h-full "/>
+                <div className="bg-slate-700 w-[45%] h-full "/>
 
                 <div className="ml-[24px]">
                     <h1 className=" text-[48px] font-sans font-semibold">Criar conta</h1>
