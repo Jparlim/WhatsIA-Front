@@ -7,15 +7,22 @@ const events = [
 
 export function Calendar() {
     return (
-        <div className="w-[400px] h-full ml-6">
+        <div className="min-w-[500px] max-h-[500px] ml-6 bg-white border-bordas border-[1px] rounded-[16px] p-8">
             <FullCalendar
-            height={450}
+            height={420}
             plugins={[dayGridPlugin]}
             initialView="dayGridMonth"
             events={events}
             weekends={true}
             eventContent={renderEventContent}
             buttonText={{ today: 'Hoje'}}
+            fixedWeekCount={false}
+            showNonCurrentDates={true}
+            headerToolbar={{
+              left: 'prev',
+              center: 'title',
+              right: 'next'
+            }}
           />
         </div>
     )

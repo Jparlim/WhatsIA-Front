@@ -7,6 +7,7 @@ import home from "../../../Images/Home (1).png"
 import clipboard from "../../../Images/Clipboard.png"
 import { useState } from "react"
 import { Calendar } from "../../fullCalendar"
+import plus from "../../../Images/Plus.png"
 
 export function Home() {
 
@@ -104,10 +105,45 @@ export function Home() {
                     </div>
                 )}
 
-                <div>
-                    <h1 className="text-[40px] font-sans font-semibold mt-2 ml-6">Visitas Agendadas</h1>
-                    <Calendar />
+                <div className="">
+
+                    <div className="flex justify-around w-full">
+                        <h1 className="text-[40px] font-sans font-semibold mt-2 ml-6">Visitas Agendadas</h1>
+                        
+                        <button className="bg-azulButton w-[170px] h-[50px] rounded-[15px] text-white ml-[133px] active:bg-black hover:bg-azulButton mt-[15px] flex items-center justify-center gap-[6px]">
+                            <img src={plus} alt="" className="size-6"/>
+                            Adicionar visita
+                        </button>
+                    </div>
+
+                    <div className="flex gap-8 w-full h-full mt-6">
+                        <Calendar />
+
+                        <div className="border-bordas border-[1px] w-[35%] h-[70%]">
+                            <div>
+                                <p>Nome</p>
+                                <p>Data</p>
+                                <p>Horário</p>
+                            </div>
+                            <li>
+                                {/* Here will be the list of scheduled visits */}
+                                <div>
+                                    <p>João Silva</p>
+                                    <p>25/06/2024</p>
+                                    <p>14:00</p>
+                                    <button>
+                                        <img src={plus} alt="" className=""/>
+                                    </button>
+                                    <button>
+                                        <img src="" alt="" />
+                                    </button>
+                                </div>
+                            </li>
+                        </div>
+                    </div>
+
                 </div>
+                
             </div>
         </div>
     )
