@@ -8,6 +8,76 @@ import clipboard from "../../../Images/Clipboard.png"
 import { useState } from "react"
 import { Calendar } from "../../fullCalendar"
 import plus from "../../../Images/Plus.png"
+import pen from "../../../Images/Icon.png"
+import trash from "../../../Images/Icon (1).png"
+
+const listTest = [
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    }
+]
 
 export function Home() {
 
@@ -105,9 +175,9 @@ export function Home() {
                     </div>
                 )}
 
-                <div className="">
+                <div className="w-full h-full">
 
-                    <div className="flex justify-around w-full">
+                    <div className="flex justify-between w-full">
                         <h1 className="text-[40px] font-sans font-semibold mt-2 ml-6">Visitas Agendadas</h1>
                         
                         <button className="bg-azulButton w-[170px] h-[50px] rounded-[15px] text-white ml-[133px] active:bg-black hover:bg-azulButton mt-[15px] flex items-center justify-center gap-[6px]">
@@ -119,26 +189,27 @@ export function Home() {
                     <div className="flex gap-8 w-full h-full mt-6">
                         <Calendar />
 
-                        <div className="border-bordas border-[1px] w-[35%] h-[70%]">
-                            <div>
-                                <p>Nome</p>
-                                <p>Data</p>
-                                <p>Horário</p>
-                            </div>
-                            <li>
-                                {/* Here will be the list of scheduled visits */}
-                                <div>
-                                    <p>João Silva</p>
-                                    <p>25/06/2024</p>
-                                    <p>14:00</p>
-                                    <button>
-                                        <img src={plus} alt="" className=""/>
-                                    </button>
-                                    <button>
-                                        <img src="" alt="" />
-                                    </button>
+                        <div className="border-bordas border-[1px] w-[48%] h-[83%] rounded-[10px]">
+                            <div className="flex flex-col w-full">
+                                <div className="flex gap-4 justify-between pl-[30px] pr-[120px] pt-[20px] border-b-2 border-bordas w-[97%] m-auto">
+                                    <p className="text-[17px] text-black/50 font-sans font-semibold">Nome</p>
+                                    <p className="text-[17px] text-black/50 font-sans font-semibold">Data</p>
+                                    <p className="text-[17px] text-black/50 font-sans font-semibold">Horário</p>
                                 </div>
-                            </li>
+                            </div>
+                            <ul className={`flex flex-col list-none gap-2`}>
+                                {/* Here will be the list of scheduled visits */}
+
+                                {listTest.map((item, index) => {
+                                    return (
+                                        <li className="flex list-none gap-2 justify-between items-center border-b-[2px] w-[97%] h-[35px] pl-[20px] pr-[20px] m-auto">
+                                            <p>{item.name}</p>
+                                            <p>{item.date}</p>
+                                            <p>{item.time}</p>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
                         </div>
                     </div>
 
