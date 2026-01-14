@@ -74,7 +74,8 @@ export function TokenSend() {
                                     onKeyDown={e => onkeyDown(e, index)}
                                     className="w-[80px] h-[55px] border-[3px] border-bordas rounded-[10px] focus:outline-none pl-[28px] font-semibold text-[25px]"
                                 />    
-                        ))}
+                            ))
+                        }
 
                     </div>
                 </form>

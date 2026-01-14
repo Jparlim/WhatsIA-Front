@@ -67,16 +67,7 @@ const listTest = [
         date: "25/06/2024",
         time: "14:00"
     },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    }
+
 ]
 
 export function Home() {
@@ -186,7 +177,7 @@ export function Home() {
                         </button>
                     </div>
 
-                    <div className="flex gap-8 w-full h-full mt-6">
+                    <div className="flex gap-8 w-full h-[85%] mt-6">
                         <Calendar />
 
                         <div className="border-bordas border-[1px] w-[48%] h-[83%] rounded-[10px]">
@@ -197,18 +188,20 @@ export function Home() {
                                     <p className="text-[17px] text-black/50 font-sans font-semibold">Horário</p>
                                 </div>
                             </div>
-                            <ul className={`flex flex-col list-none gap-2`}>
+                            <ul className={`flex flex-col list-none gap-2 h-[470px] overflow-y-auto`}>
                                 {/* Here will be the list of scheduled visits */}
 
-                                {listTest.map((item, index) => {
-                                    return (
-                                        <li className="flex list-none gap-2 justify-between items-center border-b-[2px] w-[97%] h-[35px] pl-[20px] pr-[20px] m-auto">
-                                            <p>{item.name}</p>
-                                            <p>{item.date}</p>
-                                            <p>{item.time}</p>
-                                        </li>
-                                    )
-                                })}
+                                {listTest.map((item) => (
+                                    <li className="flex list-none gap-2 justify-between items-center border-b-[2px] w-[97%] h-[35px] pl-[20px] pr-[20px] m-auto">
+                                        <p>{item.name}</p>
+                                        <p>{item.date}</p>
+                                        <p>{item.time}</p>
+                                        <div className="flex gap-2 size-5 mr-4">
+                                            <img src={pen} className="hover:cursor-pointer" alt="" />
+                                            <img src={trash} className="hover:cursor-pointer" alt="" />
+                                        </div>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>
