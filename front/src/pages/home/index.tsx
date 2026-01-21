@@ -10,6 +10,7 @@ import { Calendar } from "../../fullCalendar"
 import plus from "../../../Images/Plus.png"
 import pen from "../../../Images/Icon.png"
 import trash from "../../../Images/Icon (1).png"
+import axios from "axios"
 
 const listTest = [
     {
@@ -67,8 +68,43 @@ const listTest = [
         date: "25/06/2024",
         time: "14:00"
     },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
+    {
+        name: "João Silva",
+        date: "25/06/2024",
+        time: "14:00"
+    },
 
 ]
+
+const handleDelete = async (index:number) => {
+    try {
+        await axios.delete(`http://localhost:3000/visits/delete/${index}`)
+        return alert("Visita deletada com sucesso!")
+    } catch (error) {
+        console.log(error) 
+        return alert("Erro ao deletar visita.")
+    }
+}
 
 export function Home() {
 
@@ -177,10 +213,10 @@ export function Home() {
                         </button>
                     </div>
 
-                    <div className="flex gap-8 w-full h-[85%] mt-6">
+                    <div className="flex gap-8 w-full h-[85%] mt-6 pb-4">
                         <Calendar />
 
-                        <div className="border-bordas border-[1px] w-[48%] h-[83%] rounded-[10px]">
+                        <div className="border-bordas border-[1px] w-[48%] h-full rounded-[10px] flex flex-col">
                             <div className="flex flex-col w-full">
                                 <div className="flex gap-4 justify-between pl-[30px] pr-[120px] pt-[20px] border-b-2 border-bordas w-[97%] m-auto">
                                     <p className="text-[17px] text-black/50 font-sans font-semibold">Nome</p>
@@ -188,17 +224,17 @@ export function Home() {
                                     <p className="text-[17px] text-black/50 font-sans font-semibold">Horário</p>
                                 </div>
                             </div>
-                            <ul className={`flex flex-col list-none gap-2 h-[470px] overflow-y-auto`}>
+                            <ul className={`flex flex-col flex-1 list-none gap-2 overflow-y-auto`}>
                                 {/* Here will be the list of scheduled visits */}
 
-                                {listTest.map((item) => (
-                                    <li className="flex list-none gap-2 justify-between items-center border-b-[2px] w-[97%] h-[35px] pl-[20px] pr-[20px] m-auto">
+                                {listTest.map((item, index, arrayOrigin) => (
+                                    <li className="flex list-none gap-2 justify-between items-center border-b-[2px] w-[97%] max-h-max pl-[20px] pr-[20px] m-auto">
                                         <p>{item.name}</p>
                                         <p>{item.date}</p>
                                         <p>{item.time}</p>
-                                        <div className="flex gap-2 size-5 mr-4">
-                                            <img src={pen} className="hover:cursor-pointer" alt="" />
-                                            <img src={trash} className="hover:cursor-pointer" alt="" />
+                                        <div className="flex gap-2 size-4 mr-4">
+                                            <img src={pen} className="hover:cursor-pointer" onClick={() => handleDelete(index)} />
+                                            <img src={trash} className="hover:cursor-pointer"  />
                                         </div>
                                     </li>
                                 ))}
