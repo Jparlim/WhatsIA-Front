@@ -14,86 +14,17 @@ import axios from "axios"
 
 const listTest = [
     {
+        id: 1,
         name: "João Silva",
         date: "25/06/2024",
         time: "14:00"
     },
     {
+        id: 1,
         name: "João Silva",
         date: "25/06/2024",
         time: "14:00"
     },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-    {
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-
 ]
 
 const handleDelete = async (index:number) => {
@@ -112,19 +43,19 @@ export function Home() {
 
     return (
         <div className="bg-backGround h-screen flex items-center justify-center">
-            <div className="w-[95%] h-[95%] flex rounded-[20px] shadow-2xl bg-white">
+            <div className="w-[95%] h-[95%] flex rounded-[20px] shadow-2xl bg-white relative">
 
                 {!isOpen ? (
                     <div className="flex flex-col gap-[25px] w-[230px] h-[95%] border-l-border border-r-[2px] mt-4">
 
-                        <div className="flex items-center gap-5 mt-5 pl-[25px]">
+                        <div className="flex items-center mt-5 pl-[25px]">
                             <button type="button" onClick={() => setIsOpen(!isOpen)}>
                                 <img src={menu} className="size-8 hover:cursor-pointer active:scale-[90%]" alt="" />
                             </button>
-                            <h1 className={`text-[22px] transition-all duration-500 ${!isOpen ? "translate-x-[0px]" : "translate-x-[10px]"}`}>Dashboard</h1>
+                            <h1 className={`text-[22px] transition-all duration-500 translate-x-[15px]`}>Dashboard</h1>
                         </div>
                         
-                        <div className={`flex flex-col gap-[10px] mt-[10px] transition-all duration-500 ${!isOpen ? "translate-x-[0px]" : "translate-x-[10px]"} opacity-100`}>
+                        <div className={`flex flex-col gap-[10px] mt-[10px] transition-all duration-500 opacity-100`}>
                             <div className="flex items-center gap-4 pl-8 hover:cursor-pointer hover:bg-azulButton h-[60px] transition-colors duration-200 rounded-bl-[10px] rounded-tl-[10px]">
                                 <img src={home} className="size-[25px] " alt="" />
                                 <p className="text-[15px] ">Tela inicial</p>
@@ -158,16 +89,18 @@ export function Home() {
 
                     </div>
                 ) : (
-                    <div className={`flex flex-col gap-[25px] h-[95%] mt-4`}>
+                    <div className={`flex flex-col gap-[25px] h-12 mt-4 absolute`}>
 
-                        <div className="flex items-center gap-5 mt-5 pl-[25px] ">
-                            <button type="button" onClick={() => setIsOpen(!isOpen)}>
+                        <div className="flex items-center mt-5 pl-[25px]">
+                            <button type="button" className="absolute" onClick={() => setIsOpen(!isOpen)}>
                                 <img src={menu} className="size-8 hover:cursor-pointer active:scale-[90%]" alt="" />
                             </button>
-                            <h1 className="text-[22px] transition-all duration-500 -translate-x-[10px] opacity-0 pointer-events-none">Dashboard</h1>
+                            <h1 className={`text-[22px] transition-all duration-100 -translate-x-0 opacity-0 pointer-events-none`}>Dashboard</h1>
                         </div>
 
-                        <div className={`flex-col mt-[10px] transition-all duration-500 -translate-x-[20px] opacity-0 pointer-events-none`}>
+                        {/* olhar a div de baixo e comparar com o h1, o de baixo está certo, se copiar funcionna */}
+
+                        <div className={`flex-col mt-[10px] transition-all duration-100 -translate-x-[20px] opacity-0 pointer-events-none`}>
                             <div className="flex items-center gap-4 pl-8 hover:cursor-pointer hover:bg-azulButton h-[60px] transition-colors duration-200 rounded-bl-[10px] rounded-tl-[10px]">
                                 <img src={home} className="size-[25px] " alt="" />
                                 <p className="text-[15px]">Tela inicial</p>
@@ -202,12 +135,12 @@ export function Home() {
                     </div>
                 )}
 
-                <div className="w-full h-full">
+                <div className={`w-full h-full pr-6`}>
 
-                    <div className="flex justify-between w-full">
-                        <h1 className="text-[40px] font-sans font-semibold mt-2 ml-6">Visitas Agendadas</h1>
+                    <div className={`flex justify-between w-full h-[10%]`}>
+                        <h1 className={`text-[40px] font-sans font-semibold mt-2 ml-6 ${!isOpen ? '' : 'pl-20'}`}>Visitas Agendadas</h1>
                         
-                        <button className="bg-azulButton w-[170px] h-[50px] rounded-[15px] text-white ml-[133px] active:bg-black hover:bg-azulButton mt-[15px] flex items-center justify-center gap-[6px]">
+                        <button className="bg-azulButton w-[170px] h-[50px] rounded-[15px] text-white active:bg-black hover:bg-azulButton flex items-center justify-center gap-[6px] mt-12">
                             <img src={plus} alt="" className="size-6"/>
                             Adicionar visita
                         </button>
@@ -216,25 +149,24 @@ export function Home() {
                     <div className="flex gap-8 w-full h-[85%] mt-6 pb-4">
                         <Calendar />
 
-                        <div className="border-bordas border-[1px] w-[48%] h-full rounded-[10px] flex flex-col">
-                            <div className="flex flex-col w-full">
-                                <div className="flex gap-4 justify-between pl-[30px] pr-[120px] pt-[20px] border-b-2 border-bordas w-[97%] m-auto">
-                                    <p className="text-[17px] text-black/50 font-sans font-semibold">Nome</p>
-                                    <p className="text-[17px] text-black/50 font-sans font-semibold">Data</p>
-                                    <p className="text-[17px] text-black/50 font-sans font-semibold">Horário</p>
-                                </div>
+                        <div className="border-bordas border-[1px] w-full h-full rounded-[10px] flex flex-col">
+                            <div className="grid grid-cols-[2fr_1fr_1fr_50px] px-8 py-3 border-b-2 border-bordas">
+                                <p className="text-[17px] text-black/50 font-sans font-semibold">Nome</p>
+                                <p className="text-[17px] text-black/50 font-sans font-semibold">Data</p>
+                                <p className="text-[17px] text-black/50 font-sans font-semibold">Horário</p>
                             </div>
                             <ul className={`flex flex-col flex-1 list-none gap-2 overflow-y-auto`}>
                                 {/* Here will be the list of scheduled visits */}
 
-                                {listTest.map((item, index, arrayOrigin) => (
-                                    <li className="flex list-none gap-2 justify-between items-center border-b-[2px] w-[97%] max-h-max pl-[20px] pr-[20px] m-auto">
+                                {listTest.map((item, index) => (
+                                    
+                                    <li className="grid grid-cols-[2fr_1fr_1fr_40px] px-8 py-4 border-b-2 border-bordas items-center">
                                         <p>{item.name}</p>
                                         <p>{item.date}</p>
                                         <p>{item.time}</p>
-                                        <div className="flex gap-2 size-4 mr-4">
-                                            <img src={pen} className="hover:cursor-pointer" onClick={() => handleDelete(index)} />
-                                            <img src={trash} className="hover:cursor-pointer"  />
+                                        <div className="flex gap-3 size-6 ">
+                                            <img src={pen} className="hover:cursor-pointer"/>
+                                            <img src={trash} className="hover:cursor-pointer" onClick={() => handleDelete(item.id)} />
                                         </div>
                                     </li>
                                 ))}

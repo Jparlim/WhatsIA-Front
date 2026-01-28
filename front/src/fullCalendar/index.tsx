@@ -7,9 +7,8 @@ const events = [
 
 export function Calendar() {
     return (
-        <div className="min-w-[500px] max-h-[500px] ml-6 bg-white border-bordas border-[1px] rounded-[16px] p-8">
+        <div className="min-w-[600px] max-h-[600px] ml-6 bg-white border-bordas border-[1px] rounded-[16px] p-8">
             <FullCalendar
-            height={420}
             plugins={[dayGridPlugin]}
             initialView="dayGridMonth"
             events={events}
