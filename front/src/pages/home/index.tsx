@@ -21,9 +21,21 @@ const listTest = [
     },
     {
         id: 1,
-        name: "João Silva",
+        name: "Ana Souza",
         date: "25/06/2024",
-        time: "14:00"
+        time: "12:00"
+    },
+    {
+        id: 1,
+        name: "Maria Oliveira",
+        date: "25/06/2024",
+        time: "18:25"
+    },
+    {
+        id: 1,
+        name: "Maria Oliveira",
+        date: "25/06/2024",
+        time: "10:30"
     },
 ]
 
@@ -36,6 +48,16 @@ const handleDelete = async (index:number) => {
         return alert("Erro ao deletar visita.")
     }
 }
+
+const sortedList = [...listTest].sort((a, b) => {
+    const [HoraA, MinutoA] = a.time.split(':').map(Number);
+    const [HoraB, MinutoB] = b.time.split(':').map(Number);
+
+    const MinA = HoraA * 60 + MinutoA;
+    const MinB = HoraB * 60 + MinutoB;
+
+    return MinA - MinB;
+})
 
 export function Home() {
 
@@ -150,17 +172,15 @@ export function Home() {
                         <Calendar />
 
                         <div className="border-bordas border-[1px] w-full h-full rounded-[10px] flex flex-col">
-                            <div className="grid grid-cols-[2fr_1fr_1fr_50px] px-8 py-3 border-b-2 border-bordas">
+                            <div className="grid grid-cols-[2fr_2fr_1fr_50px] px-8 py-3 border-b-2 border-bordas">
                                 <p className="text-[17px] text-black/50 font-sans font-semibold">Nome</p>
                                 <p className="text-[17px] text-black/50 font-sans font-semibold">Data</p>
                                 <p className="text-[17px] text-black/50 font-sans font-semibold">Horário</p>
                             </div>
                             <ul className={`flex flex-col flex-1 list-none gap-2 overflow-y-auto`}>
-                                {/* Here will be the list of scheduled visits */}
 
-                                {listTest.map((item, index) => (
-                                    
-                                    <li className="grid grid-cols-[2fr_1fr_1fr_40px] px-8 py-4 border-b-2 border-bordas items-center">
+                                {sortedList.map((item) => (
+                                    <li className="grid grid-cols-[2fr_2fr_1fr_50px] px-4 py-4 border-b-2 border-bordas items-center">
                                         <p>{item.name}</p>
                                         <p>{item.date}</p>
                                         <p>{item.time}</p>
@@ -170,6 +190,7 @@ export function Home() {
                                         </div>
                                     </li>
                                 ))}
+                                    
                             </ul>
                         </div>
                     </div>
