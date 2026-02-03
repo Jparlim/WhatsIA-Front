@@ -12,32 +12,15 @@ import pen from "../../../Images/Icon.png"
 import trash from "../../../Images/Icon (1).png"
 import axios from "axios"
 
-const listTest = [
-    {
-        id: 1,
-        name: "João Silva",
-        date: "25/06/2024",
-        time: "14:00"
-    },
-    {
-        id: 1,
-        name: "Ana Souza",
-        date: "25/06/2024",
-        time: "12:00"
-    },
-    {
-        id: 1,
-        name: "Maria Oliveira",
-        date: "25/06/2024",
-        time: "18:25"
-    },
-    {
-        id: 1,
-        name: "Maria Oliveira",
-        date: "25/06/2024",
-        time: "10:30"
-    },
-]
+interface ListPerson {
+    nome: string;
+    endereco: string;
+    observacao: string;
+    responsavel: string;
+    data: string;
+    hora: string;
+    status: boolean
+}
 
 const handleDelete = async (index:number) => {
     try {
@@ -49,9 +32,15 @@ const handleDelete = async (index:number) => {
     }
 }
 
+const datas = await axios.get<ListPerson[]>("http://localhost:3000/visits")
+
+const listTest = datas.data;
+
+// pode passar o id  junto com os outros dados de cada visita, após passar o id arrumar a função handleDelete
+
 const sortedList = [...listTest].sort((a, b) => {
-    const [HoraA, MinutoA] = a.time.split(':').map(Number);
-    const [HoraB, MinutoB] = b.time.split(':').map(Number);
+    const [HoraA, MinutoA] = a.hora.split(':').map(Number);
+    const [HoraB, MinutoB] = b.hora.split(':').map(Number);
 
     const MinA = HoraA * 60 + MinutoA;
     const MinB = HoraB * 60 + MinutoB;
@@ -62,10 +51,11 @@ const sortedList = [...listTest].sort((a, b) => {
 export function Home() {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [newVisit, setNewVisit] = useState(false);
 
     return (
-        <div className="bg-backGround h-screen flex items-center justify-center">
-            <div className="w-[95%] h-[95%] flex rounded-[20px] shadow-2xl bg-white relative">
+        <div className="bg-backGround h-screen flex items-center justify-center relative">
+            <div className={`w-[95%] h-[95%] flex rounded-[20px] shadow-2xl bg-white relative`}>
 
                 {!isOpen ? (
                     <div className="flex flex-col gap-[25px] w-[230px] h-[95%] border-l-border border-r-[2px] mt-4">
@@ -120,8 +110,6 @@ export function Home() {
                             <h1 className={`text-[22px] transition-all duration-100 -translate-x-0 opacity-0 pointer-events-none`}>Dashboard</h1>
                         </div>
 
-                        {/* olhar a div de baixo e comparar com o h1, o de baixo está certo, se copiar funcionna */}
-
                         <div className={`flex-col mt-[10px] transition-all duration-100 -translate-x-[20px] opacity-0 pointer-events-none`}>
                             <div className="flex items-center gap-4 pl-8 hover:cursor-pointer hover:bg-azulButton h-[60px] transition-colors duration-200 rounded-bl-[10px] rounded-tl-[10px]">
                                 <img src={home} className="size-[25px] " alt="" />
@@ -162,14 +150,14 @@ export function Home() {
                     <div className={`flex justify-between w-full h-[10%]`}>
                         <h1 className={`text-[40px] font-sans font-semibold mt-2 ml-6 ${!isOpen ? '' : 'pl-20'}`}>Visitas Agendadas</h1>
                         
-                        <button className="bg-azulButton w-[170px] h-[50px] rounded-[15px] text-white active:bg-black hover:bg-azulButton flex items-center justify-center gap-[6px] mt-12">
+                        <button className="bg-azulButton w-[170px] h-[50px] rounded-[15px] text-white active:bg-black hover:bg-azulButton flex items-center justify-center gap-[6px] mt-6" onClick={() => setNewVisit(!newVisit)}>
                             <img src={plus} alt="" className="size-6"/>
                             Adicionar visita
                         </button>
                     </div>
 
                     <div className="flex gap-8 w-full h-[85%] mt-6 pb-4">
-                        <Calendar />
+                        <Calendar/>
 
                         <div className="border-bordas border-[1px] w-full h-full rounded-[10px] flex flex-col">
                             <div className="grid grid-cols-[2fr_2fr_1fr_50px] px-8 py-3 border-b-2 border-bordas">
@@ -181,9 +169,9 @@ export function Home() {
 
                                 {sortedList.map((item) => (
                                     <li className="grid grid-cols-[2fr_2fr_1fr_50px] px-4 py-4 border-b-2 border-bordas items-center">
-                                        <p>{item.name}</p>
-                                        <p>{item.date}</p>
-                                        <p>{item.time}</p>
+                                        <p>{item.nome}</p>
+                                        <p>{item.data}</p>
+                                        <p>{item.hora}</p>
                                         <div className="flex gap-3 size-6 ">
                                             <img src={pen} className="hover:cursor-pointer"/>
                                             <img src={trash} className="hover:cursor-pointer" onClick={() => handleDelete(item.id)} />
@@ -198,6 +186,49 @@ export function Home() {
                 </div>
                 
             </div>
+
+            <div className="absolute inset-0 backdrop-blur-md bg-black/30 z-50" style={{display: newVisit ? 'flex' : 'none'}}>
+                <div className="flex flex-col bg-white absolute w-[500px] h-[90%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-[20px] shadow-2xl p-8 gap-5">
+                    <h1 className="font-semibold text-3xl -mt-3">Nova visita</h1>
+                    <div>
+                        <p className="">Nome do cliente</p>
+                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none"/>
+                    </div>
+
+                    <div>
+                        <p>Endereço</p>
+                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none"/>
+                    </div>
+
+                    <div className="flex justify-between">
+                        <div>
+                            <p>Data</p>
+                            <input type="text" className="h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none"/>
+                        </div>
+
+                        <div>
+                            <p>Hora</p>
+                            <input type="text" className="h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none"/>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p>Observação</p>
+                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none"/>
+                    </div>
+
+                    <div>
+                        <p>Responsável</p>
+                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none"/>
+                    </div>
+
+                    <div className="flex -mt-2 justify-between">
+                        <button type="button" className="bg-azulButton w-[150px] h-[50px] rounded-[15px] text-white active:scale-90 transition-all duration-100 hover:bg-azulButton mt-[15px]">Salvar visita</button>
+                        <button type="button" className="bg-white w-[150px] h-[50px] rounded-[15px] text-black active:scale-90 transition-all duration-100 hover:bg-white border-bordas border-[2px] mt-[15px]" onClick={() => setNewVisit(!newVisit)}>Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     )
 }
