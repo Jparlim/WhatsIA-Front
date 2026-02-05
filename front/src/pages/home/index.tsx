@@ -5,7 +5,7 @@ import calendar from "../../../Images/Calendar.png"
 import menu from "../../../Images/Menu.png"
 import home from "../../../Images/Home (1).png"
 import clipboard from "../../../Images/Clipboard.png"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Calendar } from "../../fullCalendar"
 import plus from "../../../Images/Plus.png"
 import pen from "../../../Images/Icon.png"
@@ -13,6 +13,7 @@ import trash from "../../../Images/Icon (1).png"
 import axios from "axios"
 
 interface ListPerson {
+    id: number,
     nome: string;
     endereco: string;
     observacao: string;
@@ -32,26 +33,39 @@ const handleDelete = async (index:number) => {
     }
 }
 
-const datas = await axios.get<ListPerson[]>("http://localhost:3000/visits")
-
-const listTest = datas.data;
-
-// pode passar o id  junto com os outros dados de cada visita, após passar o id arrumar a função handleDelete
-
-const sortedList = [...listTest].sort((a, b) => {
-    const [HoraA, MinutoA] = a.hora.split(':').map(Number);
-    const [HoraB, MinutoB] = b.hora.split(':').map(Number);
-
-    const MinA = HoraA * 60 + MinutoA;
-    const MinB = HoraB * 60 + MinutoB;
-
-    return MinA - MinB;
-})
-
 export function Home() {
-
     const [isOpen, setIsOpen] = useState(false);
     const [newVisit, setNewVisit] = useState(false);
+
+    const [ selectDate, setSelectDate ] = useState<string | null>(null);
+    const [ clients, setClients ] = useState<ListPerson[]>([]);
+
+
+    const sortedList = [...clients].sort((a, b) => {
+        const [HoraA, MinutoA] = a.hora.split(':').map(Number);
+        const [HoraB, MinutoB] = b.hora.split(':').map(Number);
+
+        const MinA = HoraA * 60 + MinutoA;
+        const MinB = HoraB * 60 + MinutoB;
+
+        return MinA - MinB;
+    });
+
+    useEffect(() => {
+        if(!selectDate) return;
+
+        async function FetchData() {
+            try {
+                const datas = await axios.get<ListPerson[]>(`http://localhost:3000/visits/get/${selectDate}`)
+        
+                setClients(datas.data)
+            } catch(error) {
+                alert("erro ao encontrar clientes!")
+            }
+        }
+
+        FetchData();
+    }, [selectDate]);
 
     return (
         <div className="bg-backGround h-screen flex items-center justify-center relative">
@@ -145,6 +159,12 @@ export function Home() {
                     </div>
                 )}
 
+                {/*
+                 requisito: quando o usuario clica em algum dia do mês no calendario, na lista ao lado aparece apenas os clientes que tem horário reservado no dia que foi clicado
+                problema: fullcalendar esta separado da página home
+                obs:
+                */}
+
                 <div className={`w-full h-full pr-6`}>
 
                     <div className={`flex justify-between w-full h-[10%]`}>
@@ -157,7 +177,7 @@ export function Home() {
                     </div>
 
                     <div className="flex gap-8 w-full h-[85%] mt-6 pb-4">
-                        <Calendar/>
+                        <Calendar onDateSelect={setSelectDate}/>
 
                         <div className="border-bordas border-[1px] w-full h-full rounded-[10px] flex flex-col">
                             <div className="grid grid-cols-[2fr_2fr_1fr_50px] px-8 py-3 border-b-2 border-bordas">
