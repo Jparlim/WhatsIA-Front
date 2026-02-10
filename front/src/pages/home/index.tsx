@@ -67,6 +67,17 @@ export function Home() {
         FetchData();
     }, [selectDate]);
 
+    const [nome, setNome] = useState("")
+    const [endereço, setEndereço] = useState("")
+    const [data, setData] = useState("")
+    const [hora, setHora] = useState("")
+    const [observação, setObservação] = useState("")
+    const [responsavel, setResponsavel] = useState("")
+
+    const handleCreateVisit = function() {
+        
+    }
+
     return (
         <div className="bg-backGround h-screen flex items-center justify-center relative">
             <div className={`w-[95%] h-[95%] flex rounded-[20px] shadow-2xl bg-white relative`}>
@@ -212,38 +223,38 @@ export function Home() {
                     <h1 className="font-semibold text-3xl -mt-3">Nova visita</h1>
                     <div>
                         <p className="">Nome do cliente</p>
-                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none"/>
+                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none" onChange={e => setNome(e.target.value)}/>
                     </div>
 
                     <div>
                         <p>Endereço</p>
-                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none"/>
+                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none" onChange={e => setEndereço(e.target.value)}/>
                     </div>
 
                     <div className="flex justify-between">
                         <div>
                             <p>Data</p>
-                            <input type="text" className="h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none"/>
+                            <input type="text" className="h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none" onChange={e => setData(e.target.value)}/>
                         </div>
 
                         <div>
                             <p>Hora</p>
-                            <input type="text" className="h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none"/>
+                            <input type="text" className="h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none" onChange={e => setHora(e.target.value)}/>
                         </div>
                     </div>
 
                     <div>
                         <p>Observação</p>
-                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none"/>
+                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none" onChange={e => setObservação(e.target.value)}/>
                     </div>
 
                     <div>
                         <p>Responsável</p>
-                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none"/>
+                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none" onChange={e => setResponsavel(e.target.value)}/>
                     </div>
 
                     <div className="flex -mt-2 justify-between">
-                        <button type="button" className="bg-azulButton w-[150px] h-[50px] rounded-[15px] text-white active:scale-90 transition-all duration-100 hover:bg-azulButton mt-[15px]">Salvar visita</button>
+                        <button type="button" className="bg-azulButton w-[150px] h-[50px] rounded-[15px] text-white active:scale-90 transition-all duration-100 hover:bg-azulButton mt-[15px]" onClick={}>Salvar visita</button>
                         <button type="button" className="bg-white w-[150px] h-[50px] rounded-[15px] text-black active:scale-90 transition-all duration-100 hover:bg-white border-bordas border-[2px] mt-[15px]" onClick={() => setNewVisit(!newVisit)}>Cancelar</button>
                     </div>
                 </div>

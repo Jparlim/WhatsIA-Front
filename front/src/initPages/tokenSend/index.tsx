@@ -24,6 +24,7 @@ export function TokenSend() {
         try {
             await axios.post("http://localhost:3000/create/token", {token, idPending})
             alert("conta criada com sucesso!!")
+            nav("/home")
         } catch(error) {
             console.log(error)
         }
