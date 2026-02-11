@@ -71,11 +71,35 @@ export function Home() {
     const [endereço, setEndereço] = useState("")
     const [data, setData] = useState("")
     const [hora, setHora] = useState("")
-    const [observação, setObservação] = useState("")
+    const [observacao, setObservação] = useState("")
     const [responsavel, setResponsavel] = useState("")
 
-    const handleCreateVisit = function() {
-        
+    const handleCreateVisit = async function() {
+
+        const ClientId = await axios.get(`http://localhost:3000/get_client_id`)
+
+        try {
+            await axios.post("http://localhost:3000/visits/create", {
+                nome,
+                endereco: endereço,
+                data,
+                hora,
+                observacao,
+                responsavel,
+                status: true,
+                // clienteId: 1
+            })
+            alert("Visita criada com sucesso!")
+            setNewVisit(false)
+        } catch (error) {
+            console.log(error)
+            alert("Erro ao criar visita.")
+        }
+    }
+
+    const handleCancelVisit = async function() {
+        setNewVisit(false);
+
     }
 
     return (
@@ -254,7 +278,7 @@ export function Home() {
                     </div>
 
                     <div className="flex -mt-2 justify-between">
-                        <button type="button" className="bg-azulButton w-[150px] h-[50px] rounded-[15px] text-white active:scale-90 transition-all duration-100 hover:bg-azulButton mt-[15px]" onClick={}>Salvar visita</button>
+                        <button type="button" className="bg-azulButton w-[150px] h-[50px] rounded-[15px] text-white active:scale-90 transition-all duration-100 hover:bg-azulButton mt-[15px]" onClick={() => handleCreateVisit()}>Salvar visita</button>
                         <button type="button" className="bg-white w-[150px] h-[50px] rounded-[15px] text-black active:scale-90 transition-all duration-100 hover:bg-white border-bordas border-[2px] mt-[15px]" onClick={() => setNewVisit(!newVisit)}>Cancelar</button>
                     </div>
                 </div>
