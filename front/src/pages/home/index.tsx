@@ -68,6 +68,7 @@ export function Home() {
     }, [selectDate]);
 
     const [nome, setNome] = useState("")
+    const [numero, setNumero] = useState("")
     const [endereço, setEndereço] = useState("")
     const [data, setData] = useState("")
     const [hora, setHora] = useState("")
@@ -76,18 +77,21 @@ export function Home() {
 
     const handleCreateVisit = async function() {
 
-        const ClientId = await axios.get(`http://localhost:3000/get_client_id`)
+        const ClientId = await axios.post(`http://localhost:3000/get_client_id`, {
+            numberClient: numero
+        })
 
         try {
             await axios.post("http://localhost:3000/visits/create", {
-                nome,
+                nome: nome,
+                numero: numero,
                 endereco: endereço,
-                data,
-                hora,
-                observacao,
-                responsavel,
+                data: data,
+                hora: hora,
+                observacao: observacao,
+                responsavel: responsavel,
                 status: true,
-                // clienteId: 1
+                clienteId: ClientId.data.id
             })
             alert("Visita criada com sucesso!")
             setNewVisit(false)
@@ -100,6 +104,43 @@ export function Home() {
     const handleCancelVisit = async function() {
         setNewVisit(false);
 
+        setNome("")
+        setNumero("")
+        setEndereço("")
+        setData("")
+        setHora("")
+        setObservação("")
+        setResponsavel("")
+    }
+
+    const formatarTelefone = (valor: string) => {
+        if (valor.length === 0) return '';
+
+        if (valor.length <= 2) return valor;
+        if (valor.length <= 4) return `${valor.slice(0, 2)} (${valor.slice(2)}`;
+        if (valor.length <= 9)
+            return `${valor.slice(0, 2)} (${valor.slice(2, 4)}) ${valor.slice(4)}`;
+        if (valor.length <= 13)
+            return `${valor.slice(0, 2)} (${valor.slice(2, 4)}) ${valor.slice(4, 9)}-${valor.slice(9)}`;
+
+        return `${valor.slice(0, 2)} (${valor.slice(2, 4)}) ${valor.slice(4, 9)}-${valor.slice(9, 13)}`;
+    }
+
+    const formatData = (valor: string) => {
+        if (valor.length === 0) return '';
+    
+        if (valor.length <= 2) return `${valor}`;
+        if (valor.length <= 4) return `${valor.slice(0, 2)}/${valor.slice(2)}`;
+        
+        return `${valor.slice(0, 2)}/${valor.slice(2, 4)}/${valor.slice(4, 8)}`;
+    }
+
+    const formatHora = (valor: string) => {
+        if (valor.length <= 0) return '';
+
+        if (valor.length <= 2) return valor;
+        
+        return `${valor.slice(0, 2)} : ${valor.slice(2, 4)}`;
     }
 
     return (
@@ -247,39 +288,64 @@ export function Home() {
                     <h1 className="font-semibold text-3xl -mt-3">Nova visita</h1>
                     <div>
                         <p className="">Nome do cliente</p>
-                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none" onChange={e => setNome(e.target.value)}/>
+                        <input type="text" className="w-full h-10 border-current-bordas border-[2px] pl-4 rounded-[5px] focus:outline-none" onChange={e => {
+                            const data = e.target.value.replace(/[0-9]/g, '').slice(0, 40)
+                            setNome(data)
+                        }}
+                        value={nome}/>
+                    </div>
+
+                    <div>
+                        <p className="">Numero de contato</p>
+                        <input type="text" className="w-full h-10 border-current-bordas border-[2px] pl-4 rounded-[5px] focus:outline-none" onChange={e => {
+                            const data = e.target.value.replace(/\D/g, '').slice(0, 13);
+                            setNumero(data)
+                        }} 
+                        value={formatarTelefone(numero)}
+                        onKeyDown={e => {
+                            if(e.key === "Enter") return alert(numero)
+                        }}/>
                     </div>
 
                     <div>
                         <p>Endereço</p>
-                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none" onChange={e => setEndereço(e.target.value)}/>
+                        <input type="text" className="w-full h-10 border-current-bordas border-[2px] pl-4 rounded-[5px] focus:outline-none" onChange={e => setEndereço(e.target.value)} value={endereço}
+                        onKeyDown={e => {
+                            if(e.key === "Enter") return alert(endereço)
+                        }}/>
                     </div>
 
                     <div className="flex justify-between">
                         <div>
                             <p>Data</p>
-                            <input type="text" className="h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none" onChange={e => setData(e.target.value)}/>
+                            <input type="text" className="h-10 border-current-bordas border-[2px] pl-4 rounded-[5px] focus:outline-none" onChange={e => {
+                                    setData(e.target.value.slice(0, 10).replace(/\D/g, ''))
+                                }}
+                                onKeyDown={e => {
+                                    if(e.key === "Enter") return alert(data)
+                                }}
+                                value={formatData(data)}/>
                         </div>
 
                         <div>
                             <p>Hora</p>
-                            <input type="text" className="h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none" onChange={e => setHora(e.target.value)}/>
+                            <input type="text" className="h-10 border-current-bordas border-[2px] pl-4 rounded-[5px] focus:outline-none" onChange={e => setHora(e.target.value.replace(/\D/g, '').slice(0,4))} value={formatHora(hora)} />
                         </div>
                     </div>
 
                     <div>
                         <p>Observação</p>
-                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none" onChange={e => setObservação(e.target.value)}/>
+                        <input type="text" className="w-full h-10 border-current-bordas border-[2px] pl-4 rounded-[5px] focus:outline-none" onChange={e => setObservação(e.target.value)} value={observacao}/>
                     </div>
 
                     <div>
                         <p>Responsável</p>
-                        <input type="text" className="w-full h-[40px] border-current-bordas border-[2px] rounded-[5px] focus:outline-none" onChange={e => setResponsavel(e.target.value)}/>
+                        <input type="text" className="w-full h-10 border-current-bordas border-[2px] pl-4 rounded-[5px] focus:outline-none" onChange={e => setResponsavel(e.target.value)} value={responsavel}/>
                     </div>
 
                     <div className="flex -mt-2 justify-between">
                         <button type="button" className="bg-azulButton w-[150px] h-[50px] rounded-[15px] text-white active:scale-90 transition-all duration-100 hover:bg-azulButton mt-[15px]" onClick={() => handleCreateVisit()}>Salvar visita</button>
-                        <button type="button" className="bg-white w-[150px] h-[50px] rounded-[15px] text-black active:scale-90 transition-all duration-100 hover:bg-white border-bordas border-[2px] mt-[15px]" onClick={() => setNewVisit(!newVisit)}>Cancelar</button>
+                        <button type="button" className="bg-white w-[150px] h-[50px] rounded-[15px] text-black active:scale-90 transition-all duration-100 hover:bg-white border-bordas border-[2px] mt-[15px]" onClick={() => handleCancelVisit()}>Cancelar</button>
                     </div>
                 </div>
             </div>
